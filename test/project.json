@@ -1,9 +1,9 @@
 {
-    "Name": "Project 1",
-    "Location": "Palo Alto, CA",
-    "Description": "This is a test project",
+    "name": "Project 1",
+    "location": "Palo Alto, CA",
+    "description": "This is a test project",
     "pictures": [
-        "https://api.estuary.tech/gw/ipfs/bafkreibgzmusmdm34lllmfcp4kmrmo5uxgorsosiuopcfv6s7cfr4dlkra",
-        "https://api.estuary.tech/gw/ipfs/bafkreibgzmusmdm34lllmfcp4kmrmo5uxgorsosiuopcfv6s7cfr4dlkra"
+        "https://gateway.pinata.cloud/ipfs/QmNQHtSLLVaYYL2yfUnEUBAw8CquDeWtC3RTKVvnPWAMJ4",
+        "https://gateway.pinata.cloud/ipfs/QmNQHtSLLVaYYL2yfUnEUBAw8CquDeWtC3RTKVvnPWAMJ4"
     ]
 }

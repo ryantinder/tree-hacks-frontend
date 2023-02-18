@@ -4,9 +4,9 @@ type ActualTableProps = {
 }
 
 interface Project {
-    Name: string;
-    Location: string;
-    Description: string;
+    name: string;
+    location: string;
+    description: string;
     pictures: string[];
 };
 
@@ -38,7 +38,7 @@ const Project: React.FC<ActualTableProps> = ({ address }) => {
     // }
     useEffect(() => {
         const fetchProject = async () => {
-            const json_string = 'https://shuttle-9.estuary.tech/gw/ipfs/bafkreicffpxbqxni5qdthwigzrz7jz6nffdzv3thi762xxiqgaqstiuygu/'
+            const json_string = 'https://gateway.pinata.cloud/ipfs/QmTmz3xs8yKVKdmNmn7pLcNbQqhzBwvS43xwSSjeKPR2VG'
             const response = await fetch(json_string);
             const data = await response.json() as Project;
             console.log(data)
@@ -53,13 +53,13 @@ const Project: React.FC<ActualTableProps> = ({ address }) => {
                 <div>
                     <div className='flex center'>
                         <div className="mt-4 p-4">
-                            <p className="mt-2">{project.Name}</p>
+                            <p className="mt-2">{project.name}</p>
                         </div>
                         <div className="mt-4 p-4">
-                            <p className="mt-2">{project.Description}</p>
+                            <p className="mt-2">{project.description}</p>
                         </div>
                         <div className="mt-4 p-4">
-                            <p className="mt-2">{project.Location}</p>
+                            <p className="mt-2">{project.location}</p>
                         </div>
                         <div className="mt-4 p-4">
                             <div className='flex'>

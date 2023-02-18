@@ -9,6 +9,7 @@ import { Pool } from '../components/Pool'
 import Table from '../components/Table'
 import { resonateABI, resonateAddress, useResonate } from '../generated'
 import { client } from '../wagmi'
+import Header from '../components/Header'
 
 async function getPoolIds(provider: ethers.providers.Provider): Promise<string[]> {
     const con = new ethers.Contract(resonateAddress, resonateABI, provider)
@@ -41,18 +42,9 @@ function Page() {
 
     return (
         <>
-        <div className="flex justify-between bg-gray-900 p-4 h-16">
-            <button className="text-white font-bold rounded-full bg-blue-500 text-white px-4 py-1.7 mx-4">All Projects</button>
-            <button className="text-white font-bold rounded-full bg-blue-500 text-white px-4 py-1.7 mx-4">My Projects</button>
-            <button className="text-white font-bold rounded-full bg-blue-500 text-white px-4 py-1.7 mx-4">Create New Project</button>
-            <button className="text-white font-bold rounded-full bg-blue-500 text-white px-4 py-1.7 mx-4">Get Worker NFT</button>
-            <div className='flex items-center'>
-                <Web3Button/>
-            </div>
-          
-        </div>
+        <Header/>
         
-        <div className="text-5xl mx-4 mt-4">Welcome to AHHHHH</div>
+        <div className="text-5xl mx-4 mt-4">Connect you wallet and view your projects</div>
         <div className="text-3xl mt-6 mx-4">Connect your wallet, then interact with projects!</div>
             
                 <Table addresses={addresses}/>

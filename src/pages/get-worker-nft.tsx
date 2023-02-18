@@ -7,10 +7,10 @@ import { Account } from '../components'
 import { ChainSwitch } from '../components/ChainSwitch'
 import { Pool } from '../components/Pool'
 import Table from '../components/Table'
-import Header from '../components/Header'
 import { resonateABI, resonateAddress, useResonate } from '../generated'
 import { uploadImage } from '../lib/pinata/requests'
 import { client } from '../wagmi'
+import Header from '../components/Header' 
 
 async function getPoolIds(provider: ethers.providers.Provider): Promise<string[]> {
     const con = new ethers.Contract(resonateAddress, resonateABI, provider)
@@ -33,22 +33,16 @@ function Page() {
         }
     }, [isConnected, chain])
     // CONST = https://shuttle-9.estuary.tech/gw/ipfs/bafkreicffpxbqxni5qdthwigzrz7jz6nffdzv3thi762xxiqgaqstiuygu/
-    // table data
-    const addresses = [
-        "0x0",
-        "0x1",
-        "0x2",
-      ];
       //end table data
 
     return (
         <>
         <Header/>     
-        <div className="text-5xl mx-4 mt-4">Welcome to GoFundThis</div>
-        <div className="text-3xl mt-6 mx-4">Connect your wallet, then interact with projects!</div>
+        <div className='text-center h-screen justify-center items-center'>  
+            <div className="text-5xl mx-4 mt-20">Support your community and get Paid!</div>
+            <div className="text-2xl mt-6 mx-4">Connect your wallet, mint your Worker ID NFT, then work on local projects!</div>
             
-                <Table addresses={addresses}/>
-            <div>{error && error.message}</div>
+        </div>
         </>
     )
 }
