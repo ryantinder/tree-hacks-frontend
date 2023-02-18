@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 import * as React from 'react'
 import { WagmiConfig } from 'wagmi'
-
+import './globals.css'
 import { chains, client, walletConnectProjectId } from '../wagmi'
 
 const ethereumClient = new EthereumClient(client, chains)

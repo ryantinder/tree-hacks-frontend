@@ -1,11 +1,11 @@
 import { modalConnectors, walletConnectProvider } from '@web3modal/ethereum'
 import { configureChains, createClient } from 'wagmi'
-import { goerli, mainnet } from 'wagmi/chains'
+import { goerli, mainnet, optimism} from 'wagmi/chains'
 
 export const walletConnectProjectId = 'fb98045db6cc26b21531a45e07c8a549'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, ...(process.env.NODE_ENV === 'development' ? [goerli] : [])],
+  [mainnet, optimism, ...(process.env.NODE_ENV === 'development' ? [goerli] : [])],
   [walletConnectProvider({ projectId: walletConnectProjectId })],
 )
 
