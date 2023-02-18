@@ -12,6 +12,19 @@ interface Project {
 
 
 const Project: React.FC<ActualTableProps> = ({ address }) => {
+    async function join() {
+        console.log("joining with my NFT");
+    }
+
+    async function donate() {
+        console.log("Going to donate some money");
+    }
+
+    async function admin() {
+        console.log("going to manage the project");
+    }
+    
+
     const [project, setProject] = useState<Project>();
     // So you now have a address object passed into this component
     // eventually its going to say readJSONString(address)
@@ -58,7 +71,11 @@ const Project: React.FC<ActualTableProps> = ({ address }) => {
                         </div>
                             
                     </div>
-                        <button style={{ backgroundColor: 'blue', color: 'white' }} onClick={() => console.log("hello")}>Join</button>
+                        <div className = 'flex center'>
+                            <button className = 'rounded-full bg-blue-500 text-white px-4 py-2 mx-4' style={{ backgroundColor: 'grey', color: 'white' }} onClick={join}>Join</button>
+                            <button className = 'rounded-full bg-blue-500 text-white px-4 py-2 mx-4' style={{ backgroundColor: 'grey', color: 'white' }} onClick={donate}>Donate</button>
+                            <button className = 'rounded-full bg-blue-500 text-white px-4 py-2 mx-4' style={{ backgroundColor: 'grey', color: 'white' }} onClick={admin}>Admin</button>
+                        </div>
                    </div>
             }
         </div>

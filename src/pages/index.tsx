@@ -35,14 +35,19 @@ function Page() {
     const addresses = [
         "0x0",
         "0x1",
-        "0x2"
+        "0x2",
       ];
       //end table data
 
     return (
         <>
-        <div className="text-5xl">Welcome to Go Fund This</div>
-        <div className="text-3xl mt-6">Connect your wallet, then interact with projects!</div>
+        <div className="flex justify-between bg-gray-900 p-4 h-16">
+            <button className="text-white font-bold rounded-full bg-blue-500 text-white px-4 py-1.7 mx-4">All Projects</button>
+            <button className="text-white font-bold rounded-full bg-blue-500 text-white px-4 py-1.7 mx-4">My Projects</button>
+            <button className="text-white font-bold rounded-full bg-blue-500 text-white px-4 py-1.7 mx-4">Get Worker NFT</button>
+        </div>
+        <div className="text-5xl mx-4 mt-4">Welcome to GoFundThis</div>
+        <div className="text-3xl mt-6 mx-4">Connect your wallet, then interact with projects!</div>
             <div className='flex justify-end'>
                 <ChainSwitch />
             </div>

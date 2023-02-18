@@ -7,7 +7,7 @@ type ActualTableProps = {
 const Table: React.FC<ActualTableProps> = ({ addresses }) => {
   return (
     <div>
-        <div className = 'flex center'>
+        <div className = 'flex center mx-8'>
                 <div className="mt-4 p-4">
                      <h1 className="text-2xl font-bold">Name</h1>
                      </div>
