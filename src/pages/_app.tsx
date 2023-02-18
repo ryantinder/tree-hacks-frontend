@@ -18,12 +18,12 @@ function App({ Component, pageProps }: AppProps) {
         <title>wagmi</title>
       </NextHead>
 
-      {mounted && <Component {...pageProps} />}
-
+      {mounted && <Component {...pageProps} />}  
       <Web3Modal
         projectId={walletConnectProjectId}
         ethereumClient={ethereumClient}
       />
+      
     </WagmiConfig>
   )
 }

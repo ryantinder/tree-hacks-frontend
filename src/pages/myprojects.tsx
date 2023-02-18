@@ -52,7 +52,7 @@ function Page() {
           
         </div>
         
-        <div className="text-5xl mx-4 mt-4">Welcome to GoFundThis</div>
+        <div className="text-5xl mx-4 mt-4">Welcome to AHHHHH</div>
         <div className="text-3xl mt-6 mx-4">Connect your wallet, then interact with projects!</div>
             
                 <Table addresses={addresses}/>
