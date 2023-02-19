@@ -1,16 +1,6 @@
-import { Fragment, useEffect, useState } from 'react'
-import { useAccount, useNetwork, useSigner, useSwitchNetwork, useWaitForTransaction } from 'wagmi'
-
-import { Account } from '../components'
-import { ChainSwitch } from '../components/ChainSwitch'
-import FileForm from '../components/fileForm'
-import { Pool } from '../components/Pool'
-import Table from '../components/Table'
+import { useState } from 'react'
+import { useSigner, useWaitForTransaction } from 'wagmi'
 import { uploadImage, uploadProject } from '../lib/pinata/requests'
-import { client } from '../wagmi'
-import axios from 'axios';
-import { JWT } from '../lib/pinata/constants'
-import Header from '../components/Header'
 import { usePrepareProjectFactoryCreateProject, useProjectFactory, useProjectFactoryCreateProject } from '../generated'
 import { getBytes32FromIpfsHash } from '../lib/helpers'
 

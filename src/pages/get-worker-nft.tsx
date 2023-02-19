@@ -1,15 +1,5 @@
-import { Web3Button } from '@web3modal/react'
-import { ethers } from 'ethers'
-import { Fragment, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
-
-import { Account } from '../components'
-import { ChainSwitch } from '../components/ChainSwitch'
-import { Pool } from '../components/Pool'
-import Table from '../components/Table'
-import { uploadImage } from '../lib/pinata/requests'
-import { client } from '../wagmi'
-import Header from '../components/Header' 
 import MintButton from "../components/MintButton"
 
 

@@ -1,17 +1,8 @@
-import { Web3Button } from '@web3modal/react'
-import { ethers } from 'ethers'
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
-
-import { Account } from '../components'
-import { ChainSwitch } from '../components/ChainSwitch'
-import { Pool } from '../components/Pool'
 import Table from '../components/Table'
-import Header from '../components/Header'
-import { uploadImage } from '../lib/pinata/requests'
 import { client } from '../wagmi'
-import { projectFactoryABI, projectFactoryAddress, useProjectFactoryIdentityProvider } from '../generated'
-import { formatUnits } from 'ethers/lib/utils.js'
+import { useProjectFactoryIdentityProvider } from '../generated'
 import { getMyIdentity, getProjects } from '../lib/helpers'
 
 
