@@ -10,7 +10,7 @@ const post = async (req, res) => {
 
     var data = JSON.stringify({
         "pinataOptions": {
-            "cidVersion": 1
+            "cidVersion": 0
         },
         "pinataMetadata": {
             "name": "testing"

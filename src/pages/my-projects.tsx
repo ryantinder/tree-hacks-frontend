@@ -7,14 +7,11 @@ import { Account } from '../components'
 import { ChainSwitch } from '../components/ChainSwitch'
 import { Pool } from '../components/Pool'
 import Table from '../components/Table'
-import { resonateABI, resonateAddress, useResonate } from '../generated'
 import { client } from '../wagmi'
 import Header from '../components/Header'
 
 async function getPoolIds(provider: ethers.providers.Provider): Promise<string[]> {
-    const con = new ethers.Contract(resonateAddress, resonateABI, provider)
-    const events = await con.queryFilter(con.filters.PoolCreated())
-    return events.map((event) => event.args?.poolId)
+    return new Promise(() => {});
 }
 
 function Page() {
@@ -42,10 +39,8 @@ function Page() {
       //end table data
 
     return (
-        <>
-        <Header/>
-        
-        <div className="text-5xl mx-4 mt-4">Connect you wallet and view your projects</div>
+        <>        
+        <div className="text-5xl mx-4 mt-4">Your Projects</div>
         <div className="text-3xl mt-6 mx-4">Connect your wallet, then interact with projects!</div>
             
                 <Table addresses={addresses}/>

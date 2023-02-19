@@ -1,30 +1,17 @@
 import React from 'react';
 import Project from './Project';
 type ActualTableProps = {
-    addresses: string[]
+    addresses: string[],
+    id: number
 }
 
-const Table: React.FC<ActualTableProps> = ({ addresses }) => {
+const Table: React.FC<ActualTableProps> = ({ addresses, id }) => {
   return (
-    <div>
-        <div className = 'flex center mx-8'>
-                <div className="mt-4 p-4">
-                     <h1 className="text-2xl font-bold">Name</h1>
-                     </div>
-                <div className="mt-4 p-4">
-                    <h2 className="text-2xl font-bold">Description</h2>
-                </div>
-                <div className="mt-4 p-4">
-                    <h3 className="text-2xl font-bold">Location</h3>
-                </div>
-                <div className="mt-4 p-4">
-                    <h4 className="text-2xl font-bold">Pictures</h4>
-                </div>
-                </div>
+    <div className='w-2/3 mx-auto'>
         {addresses.map((address, index) => {
             return (
                 <div key={index}>
-                    <Project address={address} />
+                    <Project address={address} id={id} />
                 </div>
             )
         })

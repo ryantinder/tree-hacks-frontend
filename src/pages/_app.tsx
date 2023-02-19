@@ -6,7 +6,7 @@ import * as React from 'react'
 import { WagmiConfig } from 'wagmi'
 import './globals.css'
 import { chains, client, walletConnectProjectId } from '../wagmi'
-
+import Header from '../components/Header'
 const ethereumClient = new EthereumClient(client, chains)
 
 function App({ Component, pageProps }: AppProps) {
@@ -17,7 +17,7 @@ function App({ Component, pageProps }: AppProps) {
       <NextHead>
         <title>wagmi</title>
       </NextHead>
-
+        <Header />
       {mounted && <Component {...pageProps} />}  
       <Web3Modal
         projectId={walletConnectProjectId}

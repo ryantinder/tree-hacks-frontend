@@ -24,4 +24,4 @@ function getIpfsHashFromBytes32(bytes32Hex) {
   return hashStr
 }
 
-console.log(getBytes32FromIpfsHash("QmTmz3xs8yKVKdmNmn7pLcNbQqhzBwvS43xwSSjeKPR2VG"))
+console.log(getBytes32FromIpfsHash("bafkreigmeektgjkqdzs6opasswhgjecmt3qhwkrlttb3torxtq3cmnwfhe"))

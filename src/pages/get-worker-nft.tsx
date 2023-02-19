@@ -7,44 +7,40 @@ import { Account } from '../components'
 import { ChainSwitch } from '../components/ChainSwitch'
 import { Pool } from '../components/Pool'
 import Table from '../components/Table'
-import { resonateABI, resonateAddress, useResonate } from '../generated'
 import { uploadImage } from '../lib/pinata/requests'
 import { client } from '../wagmi'
 import Header from '../components/Header' 
+import MintButton from "../components/MintButton"
 
-async function getPoolIds(provider: ethers.providers.Provider): Promise<string[]> {
-    const con = new ethers.Contract(resonateAddress, resonateABI, provider)
-    const events = await con.queryFilter(con.filters.PoolCreated())
-    return events.map((event) => event.args?.poolId)
-}
+
+// 
 
 function Page() {
     const { isConnected } = useAccount()
     const { chain } = useNetwork()
     const { chains, error, isLoading, pendingChainId, switchNetwork } = useSwitchNetwork()    
     const [poolIds, setPoolIds] = useState<string[]>([])
-    useEffect(() => {
-        if (isConnected && chain) {
-            console.log("connected")
-            getPoolIds(client.provider).then(setPoolIds)
-        } else {
-            setPoolIds([])
-            console.log("not connected")
-        }
-    }, [isConnected, chain])
+
     // CONST = https://shuttle-9.estuary.tech/gw/ipfs/bafkreicffpxbqxni5qdthwigzrz7jz6nffdzv3thi762xxiqgaqstiuygu/
       //end table data
 
-    return (
-        <>
-        <Header/>     
-        <div className='text-center h-screen justify-center items-center'>  
-            <div className="text-5xl mx-4 mt-20">Support your community and get Paid!</div>
-            <div className="text-2xl mt-6 mx-4">Connect your wallet, mint your Worker ID NFT, then work on local projects!</div>
-            
-        </div>
-        </>
-    )
+   if (isConnected) {
+        return (
+            <>
+            <div className='text-center h-screen justify-center items-center w-2/3 mx-auto'>  
+                <div className="text-5xl font-bold my-10">Support your community and get Paid!</div>
+                <div className="text-lg mt-6 mb-10">
+                    Your Helper NFT is the key to the Helping Hand ecosystem. Use it to enter projects, submit progress, and get paid!
+                    Your NFT is your identity, so it cannot be transferred and you can only mint one. Welcome to Helping Hand!
+                </div>
+                <MintButton />
+            </div>
+            </>
+        );
+   }
+   return (
+    <div></div>
+   );
 }
 
 export default Page

@@ -1,31 +1,29 @@
 import { defineConfig } from '@wagmi/cli'
-import { blockExplorer, react } from '@wagmi/cli/plugins'
-import { erc } from '@wagmi/cli/plugins'
+import { foundry, react, erc, etherscan} from '@wagmi/cli/plugins'
 export default defineConfig({
   out: 'src/generated.ts',
   contracts: [],
   plugins: [
     erc({
-        20: true,
-        4626: true
+        20: true
     }),
-    blockExplorer({
-        baseUrl: 'https://api.etherscan.io/api',
-        apiKey: '5SFYDINPP3K6VE7IYJI2S2G4Y74MQYZYTH',
+    etherscan({
+        apiKey: "56S7HS3XA43ZI25PXQP9AND4URN3J2T9P5",
+        chainId: 42161,
         contracts: [
             {
-                name: 'resonate',
-                address: '0x80CA847618030Bc3e26aD2c444FD007279DaF50A'
+                name: "ProjectFactory",
+                address: "0xf8af87b21e049659495d57416a8b34c55c6e4cce"
             },
             {
-                name: 'weth',
-                address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
-            },
-            {
-                name: 'priceProvider',
-                address: '0x0F89ba3F140Ea9370aB05d434B8e32fDf41a6093'
+                name: "IdentityProvider",
+                address: "0x1ed0A95A237b63D55128Dd53D3877B50cB97B9a0"
             }
         ]
+    }),
+    foundry({
+        project: '../my-project',
+        include: ['Project.json']
     }),
     react()
   ],
