@@ -61,7 +61,7 @@ function UploadForm() {
             pictures: ipfs_array
         })
         console.log(ipfs)
-        const b32_ipfs = 
+        const b32_ipfs =
             getBytes32FromIpfsHash(
                 ipfs
             )
@@ -78,57 +78,55 @@ function UploadForm() {
     return (
 
         <div>
-        <div className="flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold mb-4 text-center text-gray-700 uppercase tracking-widest">
-            Enter Project Name, Location, and Description
-          </h1>
-          <form onSubmit={handleSubmit} className="w-74 flex flex-col items-center gap-4">
-            <div className="flex flex-col items-center gap-4 overflow-scroll py-5">
-              <label
-                className="text-sm font-semibold text-gray-500 hover:text-gray-700 cursor-pointer fixed"
-                style={{ top: "20%", left: "45.83%" }}
-              >
-                <input type="file" onChange={handleFileChange} className="hidden" multiple />
-                <span className="border border-gray-400 rounded-full py-2 px-4">Choose Files</span>
-              </label>
-              <div className="flex items-center gap-4" id="image-container"></div>
+            <div className="flex flex-col items-center justify-center">
+                <h1 className="text-2xl font-bold mb-4 text-center text-gray-700 uppercase tracking-widest">
+                    Enter Project Name, Location, and Description
+                </h1>
+                <form onSubmit={handleSubmit} className="w-74 flex flex-col items-center gap-4">
+                    <div className="flex flex-col items-center gap-4 py-5">
+                        <div className="flex items-center gap-4" id="image-container"></div>
+
+                        <input id="upload" type="file" onChange={handleFileChange} className="inline-block text-left float-right hidden" multiple />
+                        <label htmlFor="upload" className="hover:cursor-pointer inline-block text-right float-left bg-blue-500 rounded-lg p-2 text-white font-bold px-6">
+                            {selectedFiles.length == 0 ? "Upload" : `${selectedFiles.length} Uploaded`}
+                        </label>
+                    </div>
+                    <div className="w-full grid grid-cols-3 gap-4">
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleInputChange}
+                            placeholder="Name"
+                            className="text-sm font-semibold text-gray-500 border border-gray-400 rounded-lg py-2 px-4 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        <input
+                            type="text"
+                            name="location"
+                            value={formData.location}
+                            onChange={handleInputChange}
+                            placeholder="Location"
+                            className="text-sm font-semibold text-gray-500 border border-gray-400 rounded-lg py-2 px-4 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        <input
+                            type="text"
+                            name="description"
+                            value={formData.description}
+                            onChange={handleInputChange}
+                            placeholder="Description"
+                            className="text-sm font-semibold text-gray-500 border border-gray-400 rounded-lg py-2 px-4 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="text-lg font-semibold text-white bg-blue-500 rounded-lg py-2 px-4 hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
+                    >
+                        Submit
+                    </button>
+                </form>
             </div>
-            <div className="w-full grid grid-cols-3 gap-4">
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                placeholder="Name"
-                className="text-sm font-semibold text-gray-500 border border-gray-400 rounded-lg py-2 px-4 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-              />
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleInputChange}
-                placeholder="Location"
-                className="text-sm font-semibold text-gray-500 border border-gray-400 rounded-lg py-2 px-4 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-              />
-              <input
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder="Description"
-                className="text-sm font-semibold text-gray-500 border border-gray-400 rounded-lg py-2 px-4 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-              />
-            </div>
-            <button
-              type="submit"
-              className="text-lg font-semibold text-white bg-blue-500 rounded-lg py-2 px-4 hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 focus:border-blue-500"
-            >
-              Submit
-            </button>
-          </form>
         </div>
-      </div>
-      
+
 
     );
 }

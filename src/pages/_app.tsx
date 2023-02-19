@@ -15,7 +15,7 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={client}>
       <NextHead>
-        <title>wagmi</title>
+        <title>Help to Earn</title>
       </NextHead>
         <Header />
       {mounted && <Component {...pageProps} />}  
