@@ -15,24 +15,22 @@ const teamMembers = [
 ];
 
 const About = () => {
-  return (
-    <div className="flex flex-col items-center justify-center space-y-10 py-10">
-      <h1 className="text-4xl font-bold">About the Team</h1>
-      <div className="flex flex-col items-center justify-center space-y-10">
-        {teamMembers.map((teamMember, index) => (
-          <div className="flex flex-col items-center justify-center" key={index}>
-            <div className="rounded-full overflow-hidden h-40 w-40 flex items-center justify-center border-2 border-gray-300">
-            <Link href="/" passHref>
+    return (
+      <div className="flex flex-col items-center justify-center space-y-10 py-10 h-screen">
+        <h1 className="text-4xl font-bold">About the Team</h1>
+        <div className="flex flex-wrap items-center justify-center space-x-10">
+          {teamMembers.map((teamMember, index) => (
+            <div className="flex flex-col items-center justify-center" key={index}>
+              <div className="rounded-full overflow-hidden h-40 w-40 flex items-center justify-center border-2 border-gray-300">
                 <Image src={teamMember.image} alt={teamMember.name} height={160} width={160} />
-                </Link>
+              </div>
+              <h2 className="text-xl font-bold">{teamMember.name}</h2>
+              <p className="text-center">{teamMember.bio}</p>
             </div>
-            <h2 className="text-xl font-bold">{teamMember.name}</h2>
-            <p className="text-center">{teamMember.bio}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  );
-};
-
+    );
+  };
+  
 export default About;

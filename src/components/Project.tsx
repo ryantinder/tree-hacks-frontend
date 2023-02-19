@@ -29,6 +29,7 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
     const [picIter, setPicIter] = useState<number>(0);
     const [project, setProject] = useState<Project>();
     const [donation, setDonation] = useState<number>(0);
+    const [warning, setWarning] = useState<string>("");
     const { data: asset } = useProjectAsset({ address: address as `0x${string}` });
     const { data: ipfs } = useProjectIpfs({ address: address as `0x${string}` });
     const { data: contributors } = useProjectGetContributors({ address: address as `0x${string}` });
@@ -87,7 +88,7 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
     }
 
     const doConfirm = async (options: any) => {
-        const result = await confirm("Are you sure?", {...options, closeOnOverlayClick: true});
+        const result = await confirm("Are you sure?", { ...options, closeOnOverlayClick: true });
         if (result) {
             console.log("You click yes!");
             return true;
@@ -95,18 +96,21 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
         return false;
         console.log("You click No!");
     };
-    const customRender = {
-        render: (message: any, onConfirm: any, onCancel: any) => {
-            return (
-                <div className='justify-center bg-white rounded-lg shadow-md p-5 flex-col'>
-                    <h1 className='p-10'> Hi </h1>
-                    <div className='flex mx-auto'>
-                        <button className='bg-red-500 text-white p-2 rounded-md mx-auto px-6 item-center' onClick={onConfirm}> Yes </button>    
+
+    const customRender = (message: string) => {
+        return {
+            render: (msg: any, onConfirm: any, onCancel: any) => {
+                return (
+                    <div className='justify-center bg-white rounded-lg shadow-md p-5 flex-col'>
+                        <h1 className='p-10'> {message} </h1>
+                        <div className='flex mx-auto'>
+                            <button className='bg-red-500 text-white p-2 rounded-md mx-auto px-6 item-center' onClick={onConfirm}> Yes </button>
+                        </div>
                     </div>
-                </div>
-            );
-        }
-    };
+                );
+            }
+        };
+    }
 
     useEffect(() => {
         const fetchProject = async () => {
@@ -173,7 +177,7 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
                                     <div className='flex gap-2'>
                                         <div>
                                             <button id="end" onClick={async () => {
-                                                if (await doConfirm(customRender)) endHandler();
+                                                if (await doConfirm(customRender("Are you sure you want to end this project?"))) endHandler();
                                             }} className="inline-block text-left float-right hidden" />
                                             <label htmlFor="end" className="hover:cursor-pointer inline-block text-right float-left bg-red-500 rounded-lg p-2 text-white font-bold px-6">Release Funds</label>
                                         </div>
@@ -192,7 +196,9 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
                                                 </label>
                                             </div>
                                             <div>
-                                                <button id="exit" onClick={exitHandler} className="inline-block text-left float-right hidden" />
+                                                <button id="exit" onClick={async () => {
+                                                    if (await doConfirm(customRender("Are you sure you want to abandon this project? You will not receive any funds for previous work."))) exitHandler();
+                                                }} className="inline-block text-left float-right hidden" />
                                                 <label htmlFor="exit" className="hover:cursor-pointer inline-block text-right float-left bg-red-500 rounded-lg p-2 text-white font-bold px-6">Abandon</label>
                                             </div>
                                         </div>
