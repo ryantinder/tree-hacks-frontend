@@ -1,3 +1,5 @@
+Created by Ryan Tinder and Trent Conley
+
 This is a [Next.js](https://nextjs.org) + [Web3Modal](https://web3modal.com/) + [wagmi](https://wagmi.sh) project bootstrapped with [`create-wagmi`](https://github.com/wagmi-dev/wagmi/tree/main/packages/create-wagmi)
 
 # Getting Started
