@@ -14,20 +14,12 @@ export const config = {
 const post = async (req, res) => {
     console.log("Here")
     const form = new formidable.IncomingForm();
-    form.parse(req, function(err, fields, files) {
+    form.parse(req, async (err, fields, files) => {
   
         var oldPath = files.file.filepath;
-        uploadFile(oldPath)
-        // var newPath = path.join(__dirname, 'uploads')
-        //         + '/'+ "temp.jpg"
-        //         console.log("OHH YEAH")
-        //         var rawData = fs.readFileSync(oldPath)
-        //         console.log("BOOYAH")
-        // fs.writeFile(newPath, rawData, function(err){
-        //     if(err) console.log(err)
-        //     return res.send("Successfully uploaded", newPath)
-        // })
-  })
+        const ipfs = await uploadFile(oldPath)
+        return res.send({ipfsHash: ipfs.IpfsHash})
+    })
 };
 
 const uploadFile = async (path) => {
@@ -59,11 +51,11 @@ const uploadFile = async (path) => {
         Authorization: JWT
       }
     });
-    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.log(error);
   }
-  return;
+  return { ipfsHash: null }
 };
 
 export default (req, res) => {

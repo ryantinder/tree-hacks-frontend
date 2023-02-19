@@ -1,31 +1,28 @@
-import { JWT, PINATA_BASE_URL } from "./constants"
+import { JWT, PINATA_BASE_URL, SingleImageResponse, SingleJSONResponse } from "./constants"
 import axios from "axios";
-export const uploadImage = async (file: File) => {
+import { Project } from "./constants";
 
-    const formData = new FormData();
-    
-    formData.append('file', file)
 
-    const metadata = JSON.stringify({
-      name: 'File name',
+export const uploadImage = async (file: File): Promise<string> => {
+    const body = new FormData();
+    body.append("file", file);
+    const response = await fetch("/api/upload/image", {
+        method: "POST",
+        body
     });
-    formData.append('pinataMetadata', metadata);
-    
-    const options = JSON.stringify({
-      cidVersion: 0,
-    })
-    formData.append('pinataOptions', options);
-
-    try{
-        console.log(formData)
-      const res = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", formData, {
-        headers: {
-          'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-          Authorization: JWT
-        }
-      });
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await response.json() as SingleImageResponse;
+    console.log(data)
+    return data.ipfsHash;
 }
+
+export const uploadProject = async (project: Project): Promise<string> => {
+    console.log("1", JSON.stringify(project))
+    const response = await fetch("/api/upload/json", {
+        method: "POST",
+        body: JSON.stringify(project)
+    });
+    const data = await response.json() as SingleJSONResponse;
+    console.log("req", data)
+    return data.IpfsHash;
+}
+

@@ -33,6 +33,7 @@ function Page() {
     }, [isConnected, chain])
     // CONST = https://shuttle-9.estuary.tech/gw/ipfs/bafkreicffpxbqxni5qdthwigzrz7jz6nffdzv3thi762xxiqgaqstiuygu/
     // table data
+    // we want to find out which ones the user has addresses to.
     const addresses = [
         "0x0",
         "0x1",

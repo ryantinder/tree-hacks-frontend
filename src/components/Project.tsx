@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Project } from '../lib/pinata/constants';
 type ActualTableProps = {
     address: string
 }
-
-interface Project {
-    name: string;
-    location: string;
-    description: string;
-    pictures: string[];
-};
 
 
 const Project: React.FC<ActualTableProps> = ({ address }) => {
