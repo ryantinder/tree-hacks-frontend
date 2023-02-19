@@ -1,15 +1,14 @@
 import { BigNumber, ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import { useAccount, useClient, useContract, useContractRead, useSigner } from 'wagmi';
-import { useErc20, useErc20BalanceOf, useProject, useProjectAsset, useProjectGetContributors, useProjectHost, useProjectIpfs } from '../generated';
+import { useAccount, useClient, useContract, useContractRead, useSigner, useWaitForTransaction } from 'wagmi';
+import { useErc20, useErc20BalanceOf, usePrepareProjectEndProject, useProject, useProjectAsset, useProjectEndProject, useProjectGetContributors, useProjectHost, useProjectIpfs } from '../generated';
 import { BigNumberArrayIncludes, getBytes32FromIpfsHash, projectAbi } from '../lib/helpers';
 import { Project } from '../lib/pinata/constants';
 import DonateButton from './Donate';
 import JoinButton from './Donate';
 import Link from "next/link"
 import { uploadImage } from '../lib/pinata/requests';
-import { confirm } from 'react-confirm-box';
 type ActualTableProps = {
     address: string,
     id: number
@@ -39,7 +38,23 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
     const { data: balance } = useErc20BalanceOf({ address: asset as `0x${string}`, args: [my_address as `0x${string}`] })
 
     const project_contract = useProject({ address: address as `0x${string}`, signerOrProvider: signerData });
+    
+    const { config } = usePrepareProjectEndProject({ address: address as `0x${string}`})
+    const {
+        data: endProjectData,
+        write: endProject,
+        isLoading: isEndingingProject,
+        isSuccess: isSuccessEndingProject,
+        error: endingProjectError,
+    } = useProjectEndProject(config);
 
+    const {
+        data: endProjectDataWait,
+        isSuccess: endProjectSuccessWait,
+        error: endProjectErrorWait,
+    } = useWaitForTransaction({
+        hash: endProjectData?.hash,
+    });
 
     const ERC20 = useErc20({ address: asset as `0x${string}`, signerOrProvider: signerData });
 
@@ -65,7 +80,8 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
 
     }
     const endHandler = async () => {
-        console.log("end")
+        console.log("end handler")
+        endProject?.()
     }
     const removeParticipants = async () => {
 
@@ -87,15 +103,15 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
         await tx?.wait();
     }
 
-    const doConfirm = async (options: any) => {
-        const result = await confirm("Are you sure?", { ...options, closeOnOverlayClick: true });
-        if (result) {
-            console.log("You click yes!");
-            return true;
-        }
-        return false;
-        console.log("You click No!");
-    };
+    // const doConfirm = async (options: any) => {
+    //     const result = await confirm("Are you sure?", { ...options, closeOnOverlayClick: true });
+    //     if (result) {
+    //         console.log("You click yes!");
+    //         return true;
+    //     }
+    //     return false;
+    //     console.log("You click No!");
+    // };
 
     const customRender = (message: string) => {
         return {
@@ -177,7 +193,7 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
                                     <div className='flex gap-2'>
                                         <div>
                                             <button id="end" onClick={async () => {
-                                                if (await doConfirm(customRender("Are you sure you want to end this project?"))) endHandler();
+                                                 endProject?.();
                                             }} className="inline-block text-left float-right hidden" />
                                             <label htmlFor="end" className="hover:cursor-pointer inline-block text-right float-left bg-red-500 rounded-lg p-2 text-white font-bold px-6">Release Funds</label>
                                         </div>
@@ -197,7 +213,7 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
                                             </div>
                                             <div>
                                                 <button id="exit" onClick={async () => {
-                                                    if (await doConfirm(customRender("Are you sure you want to abandon this project? You will not receive any funds for previous work."))) exitHandler();
+                                                    exitHandler();
                                                 }} className="inline-block text-left float-right hidden" />
                                                 <label htmlFor="exit" className="hover:cursor-pointer inline-block text-right float-left bg-red-500 rounded-lg p-2 text-white font-bold px-6">Abandon</label>
                                             </div>
