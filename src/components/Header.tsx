@@ -16,8 +16,11 @@ const Header: React.FC = ({}) => {
             <nav className="flex justify-center">
                 <div className="flex justify-between items-center h-20 mx-auto px-4">
                     <div className="flex space-x-4">
+                        <Link href="/" passHref>
+                            <button onClick={() => {setState(1)}} className={`hover:text-black ${state == 1 ? 'text-blue-500' : 'text-gray-500'} font-bold rounded-full px-4 py-2 transition-colors duration-300 ease-in-out`}>About</button>
+                        </Link>
                         <Link href="/projects" passHref>
-                            <button onClick={() => {setState(1)}} className={`hover:text-black ${state == 1 ? 'text-blue-500' : 'text-gray-500'} font-bold rounded-full px-4 py-2 transition-colors duration-300 ease-in-out`}>Browse Projects</button>
+                            <button onClick={() => {setState(2)}} className={`hover:text-black ${state == 2 ? 'text-blue-500' : 'text-gray-500'} font-bold rounded-full px-4 py-2 transition-colors duration-300 ease-in-out`}>Browse Projects</button>
                         </Link>
                         <Link href="/create-new-project" passHref>
                             <button onClick={() => {setState(3)}} className={`hover:text-black ${state == 3 ? 'text-blue-500' : 'text-gray-500'} font-bold rounded-full px-4 py-2 transition-colors duration-300 ease-in-out`}>Create New Project</button>

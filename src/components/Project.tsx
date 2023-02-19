@@ -2,13 +2,14 @@ import { BigNumber, ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useAccount, useClient, useContract, useContractRead, useSigner } from 'wagmi';
-import { useErc20, useErc20BalanceOf, useProject, useProjectAsset, useProjectGetContributors, useProjectIpfs } from '../generated';
+import { useErc20, useErc20BalanceOf, useProject, useProjectAsset, useProjectGetContributors, useProjectHost, useProjectIpfs } from '../generated';
 import { BigNumberArrayIncludes, getBytes32FromIpfsHash, projectAbi } from '../lib/helpers';
 import { Project } from '../lib/pinata/constants';
 import DonateButton from './Donate';
 import JoinButton from './Donate';
 import Link from "next/link"
 import { uploadImage } from '../lib/pinata/requests';
+import { confirm } from 'react-confirm-box';
 type ActualTableProps = {
     address: string,
     id: number
@@ -31,11 +32,13 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
     const { data: asset } = useProjectAsset({ address: address as `0x${string}` });
     const { data: ipfs } = useProjectIpfs({ address: address as `0x${string}` });
     const { data: contributors } = useProjectGetContributors({ address: address as `0x${string}` });
+    const { data: host } = useProjectHost({ address: address as `0x${string}` });
+
     const { data: bounty } = useErc20BalanceOf({ address: asset as `0x${string}`, args: [address as `0x${string}`] })
     const { data: balance } = useErc20BalanceOf({ address: asset as `0x${string}`, args: [my_address as `0x${string}`] })
 
     const project_contract = useProject({ address: address as `0x${string}`, signerOrProvider: signerData });
-    
+
 
     const ERC20 = useErc20({ address: asset as `0x${string}`, signerOrProvider: signerData });
 
@@ -60,6 +63,12 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
     const exitHandler = async () => {
 
     }
+    const endHandler = async () => {
+        console.log("end")
+    }
+    const removeParticipants = async () => {
+
+    }
     const donateHandler = async () => {
         if (donation > parseFloat(ethers.utils.formatUnits(balance as ethers.BigNumber, 6)) || donation <= 0) {
             return;
@@ -76,6 +85,28 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
         const tx = await project_contract?.enter(ethers.BigNumber.from(id));
         await tx?.wait();
     }
+
+    const doConfirm = async (options: any) => {
+        const result = await confirm("Are you sure?", {...options, closeOnOverlayClick: true});
+        if (result) {
+            console.log("You click yes!");
+            return true;
+        }
+        return false;
+        console.log("You click No!");
+    };
+    const customRender = {
+        render: (message: any, onConfirm: any, onCancel: any) => {
+            return (
+                <div className='justify-center bg-white rounded-lg shadow-md p-5 flex-col'>
+                    <h1 className='p-10'> Hi </h1>
+                    <div className='flex mx-auto'>
+                        <button className='bg-red-500 text-white p-2 rounded-md mx-auto px-6 item-center' onClick={onConfirm}> Yes </button>    
+                    </div>
+                </div>
+            );
+        }
+    };
 
     useEffect(() => {
         const fetchProject = async () => {
@@ -115,15 +146,15 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
                                 <p className=''>Directions</p>
                                 <p className="">{project.description}</p>
                             </div>
-                            
+
                         </div>
                         <div className="flex flex-1 items-center">
-                                <button className='text-5xl font-bold' onClick={() => setPicIter(picIter == 0 ? 0 : picIter - 1)}>{'<'}</button>
-                                <div className='mx-auto'>
-                                    <img src={"https://gateway.pinata.cloud/ipfs/" + project.pictures[picIter]}  alt="prefix ignore" />
-                                </div>
-                                <button className='text-5xl font-bold' onClick={() => setPicIter(picIter == project.pictures.length - 1 ? picIter : picIter + 1)}>{'>'}</button>
+                            <button className='text-5xl font-bold' onClick={() => setPicIter(picIter == 0 ? 0 : picIter - 1)}>{'<'}</button>
+                            <div className='mx-auto'>
+                                <img src={"https://gateway.pinata.cloud/ipfs/" + project.pictures[picIter]} alt="prefix ignore" />
                             </div>
+                            <button className='text-5xl font-bold' onClick={() => setPicIter(picIter == project.pictures.length - 1 ? picIter : picIter + 1)}>{'>'}</button>
+                        </div>
 
 
                     </div>
@@ -137,28 +168,42 @@ const Project: React.FC<ActualTableProps> = ({ address, id }) => {
                                 >
                                     Mint NFT
                                 </Link>
-                            ) : (
-                                contributors && BigNumberArrayIncludes(contributors, id) ? (
+                            ) :
+                                (host === my_address) ? (
                                     <div className='flex gap-2'>
                                         <div>
-                                            <input id="upload" type="file" onChange={progressHandler} className="inline-block text-left float-right hidden" multiple />
-                                            <label htmlFor="upload" className="hover:cursor-pointer inline-block text-right float-left bg-blue-500 rounded-lg p-2 text-white font-bold px-6">
-                                                {newImages.length == 0 ? "Upload" : `${newImages.length} Uploaded`}
-                                            </label>
+                                            <button id="end" onClick={async () => {
+                                                if (await doConfirm(customRender)) endHandler();
+                                            }} className="inline-block text-left float-right hidden" />
+                                            <label htmlFor="end" className="hover:cursor-pointer inline-block text-right float-left bg-red-500 rounded-lg p-2 text-white font-bold px-6">Release Funds</label>
                                         </div>
                                         <div>
-                                            <button id="exit" onClick={exitHandler} className="inline-block text-left float-right hidden" />
-                                            <label htmlFor="exit" className="hover:cursor-pointer inline-block text-right float-left bg-red-500 rounded-lg p-2 text-white font-bold px-6">Abandon</label>
+                                            <button id="end" onClick={removeParticipants} className="inline-block text-left float-right hidden" />
+                                            <label htmlFor="end" className="hover:cursor-pointer inline-block text-right float-left bg-red-500 rounded-lg p-2 text-white font-bold px-6">Remove Participants</label>
                                         </div>
                                     </div>
                                 ) : (
-                                    <button
-                                        className='hover:cursor-pointer bg-blue-500 rounded-lg p-2 text-white font-bold px-6'
-                                        onClick={joinHandler}>
-                                        Join
-                                    </button>
+                                    contributors && BigNumberArrayIncludes(contributors, id) ? (
+                                        <div className='flex gap-2'>
+                                            <div>
+                                                <input id="upload" type="file" onChange={progressHandler} className="inline-block text-left float-right hidden" multiple />
+                                                <label htmlFor="upload" className="hover:cursor-pointer inline-block text-right float-left bg-blue-500 rounded-lg p-2 text-white font-bold px-6">
+                                                    {newImages.length == 0 ? "Upload" : `${newImages.length} Uploaded`}
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <button id="exit" onClick={exitHandler} className="inline-block text-left float-right hidden" />
+                                                <label htmlFor="exit" className="hover:cursor-pointer inline-block text-right float-left bg-red-500 rounded-lg p-2 text-white font-bold px-6">Abandon</label>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <button
+                                            className='hover:cursor-pointer bg-blue-500 rounded-lg p-2 text-white font-bold px-6'
+                                            onClick={joinHandler}>
+                                            Join
+                                        </button>
+                                    )
                                 )
-                            )
                         }
 
                         <div className='flex gap-4'>

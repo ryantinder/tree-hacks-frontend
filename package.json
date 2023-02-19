@@ -24,6 +24,7 @@
     "next": "^13.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
+    "react-confirm-box": "^1.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
     "reactjs-popup": "^2.0.5",
